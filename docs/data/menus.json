@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22T17:40:13+09:00",
+  "updated": "2026-10-22T17:59:20+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -166,7 +166,7 @@
       },
       "images": [],
       "data_updated": "2026-10-22T17:20:06+09:00",
-      "problem": ""
+      "problem": "갱신 실패: 국립중앙도서관 페이지에서 식단을 찾지 못했습니다 (페이지 구조 변경 가능성)."
     },
     {
       "id": "pps",
@@ -177,9 +177,19 @@
       "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
       "method": "image",
       "days": {},
-      "images": [],
-      "data_updated": "2026-10-22T17:20:06+09:00",
-      "problem": ""
+      "images": [
+        {
+          "path": "images/pps/202610160013.png",
+          "title": "식단표(10.19. ~ 10.23.)",
+          "posted": "2026-10-16",
+          "week_start": "2026-10-19",
+          "week_end": "2026-10-23",
+          "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+          "pending": true
+        }
+      ],
+      "data_updated": "2026-10-22T17:59:20+09:00",
+      "problem": "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다."
     },
     {
       "id": "hyosung",
