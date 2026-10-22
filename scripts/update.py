@@ -61,7 +61,7 @@ def _apply_ocr(rid: str, data: dict, result: dict, record: dict) -> int:
     return changed
 
 
-def run_pps(state: dict) -> None:
+def run_pps(state: dict, hint: str = "") -> None:
     session = requests.Session()
     posts = source_pps.fetch_list(session)
     recent_cut = (today_kst() - dt.timedelta(days=3)).isoformat()
@@ -86,7 +86,7 @@ def run_pps(state: dict) -> None:
             warn("pps", "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다.")
             continue
         context = (f"서울지방조달청 구내식당. 게시글 제목 '{post['title']}', 게시일 {post['posted']}. "
-                   f"식단 기간은 {post['week_start']} ~ {post['week_end']}로 추정된다.")
+                   f"식단 기간은 {post['week_start']} ~ {post['week_end']}로 추정된다. " + hint)
         result = ocr.transcribe(img, ctype, context)
         changed = _apply_ocr("pps", data, result, record)
         _record_image(data, record)
@@ -108,7 +108,7 @@ def _to_jpeg_if_heic(raw: bytes, ctype: str) -> tuple[bytes, str]:
     return buf.getvalue(), "image/jpeg"
 
 
-def run_inbox(rid: str, name: str, state: dict) -> None:
+def run_inbox(rid: str, name: str, state: dict, hint: str = "") -> None:
     folder = INBOX_DIR / rid
     files = sorted(p for p in folder.glob("*") if p.suffix.lower() in IMAGE_EXT) if folder.exists() else []
     if not files:
@@ -130,7 +130,7 @@ def run_inbox(rid: str, name: str, state: dict) -> None:
         (ROOT / "docs" / rel).write_bytes(img)
         context = (f"{name}. 오늘은 {today_kst().isoformat()} ({'월화수목금토일'[today_kst().weekday()]}요일)이다. "
                    "사람이 직접 찍어 올린 식단표 사진이므로 기울어짐·빛 반사가 있을 수 있다. "
-                   "날짜에 연도가 없으면 오늘과 가장 가까운 날짜로 연도를 정한다.")
+                   "날짜에 연도가 없으면 오늘과 가장 가까운 날짜로 연도를 정한다. " + hint)
         result = ocr.transcribe(img, ctype, context)
         record = {"path": rel, "title": path.name, "posted": today_kst().isoformat(),
                   "week_start": "", "week_end": "", "source_url": ""}
@@ -146,7 +146,7 @@ def build_index(restaurants: list[dict]) -> None:
     out = {"updated": now_kst_iso(), "restaurants": []}
     for r in restaurants:
         data = load_restaurant(r["id"])
-        entry = dict(r)
+        entry = {k: v for k, v in r.items() if k != "ocr_hint"}
         entry["days"] = data.get("days", {})
         entry["images"] = data.get("images", [])[:4]
         entry["data_updated"] = data.get("updated", "")
@@ -157,11 +157,12 @@ def build_index(restaurants: list[dict]) -> None:
 
 def main() -> int:
     restaurants = load_json(ROOT / "scripts" / "restaurants.json", [])
+    hints = {r["id"]: r.get("ocr_hint", "") for r in restaurants}
     state = load_json(STATE_FILE, {})
     jobs = {
         "nl": run_nl,
-        "pps": lambda: run_pps(state),
-        "hyosung": lambda: run_inbox("hyosung", "아펠가모 반포 구내식당(효성반포빌딩 11층)", state),
+        "pps": lambda: run_pps(state, hints.get("pps", "")),
+        "hyosung": lambda: run_inbox("hyosung", "아펠가모 반포 구내식당(효성반포빌딩 11층)", state, hints.get("hyosung", "")),
     }
     failures = 0
     for rid, job in jobs.items():
