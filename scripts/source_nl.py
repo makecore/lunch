@@ -27,19 +27,35 @@ def parse(html: str) -> dict[str, list[dict]]:
     days: dict[str, list[dict]] = {}
 
     # 방법 1: 표(table)마다 바로 앞에 있는 날짜 글자를 찾는다.
+    #  - 날짜가 여러 태그로 쪼개져 있어도(<b>2026</b>년 …) 찾도록 '요소 전체 글자'로 검사한다.
+    #  - 머리칸이 <th>가 아니라 <td>여도 읽는다.
+    def has_date(tag) -> bool:
+        if tag.name in ("table", "script", "style", "body", "html") or tag.find("table"):
+            return False
+        return bool(DATE_RE.search(tag.get_text(" ", strip=True)))
+
     for table in soup.find_all("table"):
-        headers = [c.get_text(" ", strip=True) for c in table.find_all("th")]
-        if not any(h in MEAL_ORDER for h in headers):
+        rows = [[c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])] for tr in table.find_all("tr")]
+        rows = [r for r in rows if r]
+        if len(rows) < 2:
             continue
-        prev = table.find_previous(string=DATE_RE)
-        if not prev:
+        headers = rows[0]
+        meal_cols = [(i, h.replace(" ", "")) for i, h in enumerate(headers) if h.replace(" ", "") in MEAL_ORDER]
+        if not meal_cols:
             continue
-        y, m, d = map(int, DATE_RE.search(prev).groups())
-        date = dt.date(y, m, d).isoformat()
-        cells = [c.get_text(" ", strip=True) for c in table.find_all("td")]
-        meal_headers = [h for h in headers if h in MEAL_ORDER]
-        meals = [_meal(h, cells[i] if i < len(cells) else "") for i, h in enumerate(meal_headers)]
-        days[date] = meals
+        date_text = ""
+        caption = table.find("caption")
+        if caption and DATE_RE.search(caption.get_text(" ")):
+            date_text = caption.get_text(" ")
+        else:
+            prev = table.find_previous(has_date)
+            date_text = prev.get_text(" ", strip=True) if prev else ""
+        m = DATE_RE.search(date_text)
+        if not m:
+            continue
+        date = dt.date(*map(int, m.groups())).isoformat()
+        values = rows[1]
+        days[date] = [_meal(h, values[i] if i < len(values) else "") for i, h in meal_cols]
 
     if days:
         return days
@@ -73,8 +89,15 @@ def parse(html: str) -> dict[str, list[dict]]:
 def fetch() -> dict[str, list[dict]]:
     r = requests.get(URL, headers={"User-Agent": UA}, timeout=30)
     r.raise_for_status()
-    r.encoding = r.apparent_encoding or "utf-8"
+    # 페이지가 알려 주는 글자 인코딩을 우선 쓰고, 없으면 UTF-8 (자동 추측은 한글을 깨뜨릴 수 있음)
+    if "charset" not in r.headers.get("Content-Type", "").lower():
+        r.encoding = "utf-8"
     days = parse(r.text)
     if not days:
-        raise RuntimeError("국립중앙도서관 페이지에서 식단을 찾지 못했습니다 (페이지 구조 변경 가능성).")
+        # 원인 확인용으로 받은 페이지를 저장해 둔다 (state/debug/nl.html).
+        from common import ROOT
+        debug = ROOT / "state" / "debug"
+        debug.mkdir(parents=True, exist_ok=True)
+        (debug / "nl.html").write_text(r.text, encoding="utf-8")
+        raise RuntimeError(f"국립중앙도서관 페이지에서 식단을 찾지 못했습니다 (응답 {r.status_code}, {len(r.text)}자).")
     return days
