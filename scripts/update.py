@@ -161,7 +161,7 @@ def main() -> int:
     jobs = {
         "nl": run_nl,
         "pps": lambda: run_pps(state),
-        "hyosung": lambda: run_inbox("hyosung", "효성반포빌딩 11층 구내식당", state),
+        "hyosung": lambda: run_inbox("hyosung", "아펠가모 반포 구내식당(효성반포빌딩 11층)", state),
     }
     failures = 0
     for rid, job in jobs.items():
