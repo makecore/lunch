@@ -13,7 +13,7 @@ import json
 import os
 import re
 
-MODEL = os.environ.get("OCR_MODEL", "claude-opus-5-5")
+MODEL = os.environ.get("OCR_MODEL", "claude-sonnet-5-5")
 MAX_BYTES = 4_500_000  # API 이미지 한도(5MB)보다 조금 작게
 
 SCHEMA_HINT = """출력은 아래 JSON 하나만 쓴다. 설명 문장, 코드블록 표시는 쓰지 않는다.

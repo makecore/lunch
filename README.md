@@ -71,5 +71,5 @@ GitHub Pages(무료 웹페이지)로 공개 → 휴대폰에서 바로 확인
 | `tests/test_parsers.py` | 읽기 기능 점검용 테스트 |
 
 ## 참고
-- 판독 모델은 기본 `claude-opus-5-5`입니다. 바꾸려면 Settings → Variables에 `OCR_MODEL`을 추가하세요.
+- 판독 모델은 기본 `claude-sonnet-5-5`입니다(월 약 1,000원 수준). 바꾸려면 Settings → Variables에 `OCR_MODEL`을 추가하세요.
 - 식당 누리집 구조가 바뀌면 Actions 실행 기록에 노란 경고가 남고, 페이지의 해당 식당 칸에도 안내가 표시됩니다.
