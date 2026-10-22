@@ -1,0 +1,29 @@
+[
+  {
+    "id": "nl",
+    "name": "국립중앙도서관 구내식당",
+    "place": "사서연수관 1층 · 반포대로 201",
+    "info": "중식 11:00~14:00 · 6,500원",
+    "source_name": "국립중앙도서관 식단표 안내",
+    "source_url": "https://www.nl.go.kr/NL/contents/N40501020000.do",
+    "method": "text"
+  },
+  {
+    "id": "pps",
+    "name": "서울지방조달청 구내식당",
+    "place": "반포대로 217",
+    "info": "매주 식단표 이미지로 게시",
+    "source_name": "서울지방조달청 구내식당 게시판",
+    "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+    "method": "image"
+  },
+  {
+    "id": "hyosung",
+    "name": "효성반포빌딩 구내식당",
+    "place": "11층 · 반포대로 235",
+    "info": "식단표 사진을 올리면 판독해 반영",
+    "source_name": "직접 올린 식단표 사진",
+    "source_url": "",
+    "method": "photo"
+  }
+]

@@ -1,0 +1,198 @@
+{
+  "updated": "2026-10-22T17:20:06+09:00",
+  "restaurants": [
+    {
+      "id": "nl",
+      "name": "국립중앙도서관 구내식당",
+      "place": "사서연수관 1층 · 반포대로 201",
+      "info": "중식 11:00~14:00 · 6,500원",
+      "source_name": "국립중앙도서관 식단표 안내",
+      "source_url": "https://www.nl.go.kr/NL/contents/N40501020000.do",
+      "method": "text",
+      "days": {
+        "2026-10-19": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [],
+              "closed": true
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-20": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "소고기두부국",
+                "돈육김치볶음",
+                "팝콘치킨데리야끼'S",
+                "콩나물잡채",
+                "깍두기",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-21": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "맑은우동국물",
+                "가츠동",
+                "쫄면야채무침",
+                "마카로니샐러드",
+                "배추김치",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-22": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "참치김치찌개",
+                "백순대볶음",
+                "두부조림",
+                "간장무말랭이지",
+                "열무김치",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-23": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "들깨미역국",
+                "닭갈비",
+                "햄감자채볶음",
+                "파채콩나물무침",
+                "배추김치",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-24": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "(뚝)버섯육개장",
+                "떡갈비조림",
+                "새송이버섯볶음",
+                "부추유자청무침",
+                "배추김치",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        },
+        "2026-10-25": {
+          "meals": [
+            {
+              "label": "중식",
+              "items": [
+                "쌀밥",
+                "대파계란국",
+                "마파두부소스",
+                "탕수육",
+                "단무지무침",
+                "배추김치",
+                "그린샐러드"
+              ],
+              "closed": false
+            },
+            {
+              "label": "석식",
+              "items": [],
+              "closed": true
+            }
+          ],
+          "source": "text"
+        }
+      },
+      "images": [],
+      "data_updated": "2026-10-22T17:20:06+09:00",
+      "problem": ""
+    },
+    {
+      "id": "pps",
+      "name": "서울지방조달청 구내식당",
+      "place": "반포대로 217",
+      "info": "매주 식단표 이미지로 게시",
+      "source_name": "서울지방조달청 구내식당 게시판",
+      "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+      "method": "image",
+      "days": {},
+      "images": [],
+      "data_updated": "2026-10-22T17:20:06+09:00",
+      "problem": ""
+    },
+    {
+      "id": "hyosung",
+      "name": "효성반포빌딩 구내식당",
+      "place": "11층 · 반포대로 235",
+      "info": "식단표 사진을 올리면 판독해 반영",
+      "source_name": "직접 올린 식단표 사진",
+      "source_url": "",
+      "method": "photo",
+      "days": {},
+      "images": [],
+      "data_updated": "2026-10-22T17:20:06+09:00",
+      "problem": ""
+    }
+  ]
+}
