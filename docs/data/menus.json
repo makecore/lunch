@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24T15:31:15+09:00",
+  "updated": "2026-10-25T08:15:01+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -165,7 +165,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-10-24T15:31:12+09:00",
+      "data_updated": "2026-10-25T08:14:30+09:00",
       "problem": ""
     },
     {
@@ -189,7 +189,7 @@
         }
       ],
       "data_updated": "2026-10-24T15:31:15+09:00",
-      "problem": "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다."
+      "problem": "갱신 실패: HTTPSConnectionPool(host='www.pps.go.kr', port=443): Max retries exceeded with url: /seoul/bbs/list.do?key=01319 (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.pps.go.kr', port=443) at 0x7f4d74640170>, 'Connection to www.pps.go.kr timed out. (connect timeout=30)'))"
     },
     {
       "id": "hyosung",
