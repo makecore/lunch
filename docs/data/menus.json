@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T09:59:31+09:00",
+  "updated": "2026-10-30T16:45:24+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -326,7 +326,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-10-30T09:59:28+09:00",
+      "data_updated": "2026-10-30T16:45:20+09:00",
       "problem": ""
     },
     {
@@ -339,6 +339,15 @@
       "method": "image",
       "days": {},
       "images": [
+        {
+          "path": "images/pps/202610300013.png",
+          "title": "식단표(11.2. ~ 11.6.)",
+          "posted": "2026-10-30",
+          "week_start": "2026-11-02",
+          "week_end": "2026-11-06",
+          "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+          "pending": true
+        },
         {
           "path": "images/pps/202610260001.png",
           "title": "식단표(10.26. ~ 10.30.)",
@@ -358,7 +367,7 @@
           "pending": true
         }
       ],
-      "data_updated": "2026-10-30T09:59:31+09:00",
+      "data_updated": "2026-10-30T16:45:24+09:00",
       "problem": "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다."
     },
     {
