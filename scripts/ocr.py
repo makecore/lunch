@@ -12,6 +12,7 @@
 """
 from __future__ import annotations
 
+import datetime as dt
 import base64
 import io
 import json
@@ -222,25 +223,38 @@ def _used_model() -> str:
 
 
 def _normalize(result: dict) -> dict:
+    if not isinstance(result, dict) or not isinstance(result.get("days"), dict) or not result["days"]:
+        raise ValueError("판독 결과에 날짜별 식단이 없습니다.")
     days = {}
-    for date, meals in (result.get("days") or {}).items():
+    for date, meals in result["days"].items():
+        if not isinstance(date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            raise ValueError(f"잘못된 식단 날짜: {date}")
+        dt.date.fromisoformat(date)
+        if not isinstance(meals, list) or not meals:
+            raise ValueError(f"{date}: 끼니 정보가 없습니다.")
         clean = []
-        for m in meals or []:
+        for m in meals:
+            if not isinstance(m, dict) or not isinstance(m.get("items", []), list):
+                raise ValueError(f"{date}: 메뉴 목록 형식이 잘못되었습니다.")
+            if not isinstance(m.get("closed", False), bool):
+                raise ValueError(f"{date}: 휴무 여부는 true 또는 false여야 합니다.")
+            if any(not isinstance(item, str) for item in m.get("items", [])):
+                raise ValueError(f"{date}: 메뉴는 문자열이어야 합니다.")
             items = [re.sub(r"\s+", " ", str(i)).strip() for i in (m.get("items") or [])]
             items = [i for i in items if i]
             clean.append({"label": str(m.get("label", "")).strip() or "식사",
                           "items": items,
-                          "closed": bool(m.get("closed")) or not items})
+                          "closed": m.get("closed", False)})
         days[str(date)] = clean
     return {"week": result.get("week", ""), "days": days, "notes": result.get("notes", "")}
 
 
-def _flat(result: dict) -> dict[tuple[str, str], tuple[str, ...]]:
+def _flat(result: dict) -> dict[tuple[str, str], tuple[bool, tuple[str, ...]]]:
     """비교하기 쉽게 (날짜, 끼니) → 메뉴 목록 형태로 편다. 띄어쓰기 차이는 무시한다."""
     out = {}
     for date, meals in result["days"].items():
         for m in meals:
-            out[(date, m["label"].replace(" ", ""))] = tuple(i.replace(" ", "") for i in m["items"])
+            out[(date, m["label"].replace(" ", ""))] = (m["closed"], tuple(i.replace(" ", "") for i in m["items"]))
     return out
 
 
@@ -278,5 +292,6 @@ def transcribe(data: bytes, media_type: str, context: str) -> dict:
         "이미지를 다시 자세히 보고, 엇갈린 칸은 이미지에 실제로 적힌 대로 바로잡아 전체 최종본을 위 형식으로 출력하라."
     )
     final = _ask(b64, media_type, review_prompt)
+    disputed = sorted(set(disputed + diff(first, final) + diff(second, final)))
     final.update(verified=False, disputed=disputed, model=_used_model())
     return final

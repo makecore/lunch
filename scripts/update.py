@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+import argparse
 import datetime as dt
 import io
 import sys
@@ -43,7 +44,7 @@ def _record_image(data: dict, record: dict) -> None:
     data["images"].sort(key=lambda i: i.get("week_start") or i.get("read_at", ""), reverse=True)
 
 
-def _apply_ocr(rid: str, data: dict, result: dict, record: dict) -> int:
+def _apply_ocr(data: dict, result: dict, record: dict) -> int:
     meta = {"source": "image", "image": record["path"], "verified": result["verified"]}
     disputed_dates = {d.split(" ")[0] for d in result["disputed"]}
     changed = 0
@@ -96,7 +97,7 @@ def run_pps(state: dict, hint: str = "") -> None:
             warn("pps", f"식단표 판독에 실패해 원본 이미지만 표시합니다. 다음 자동 실행 때 다시 시도합니다. ({exc})")
             continue
         record.pop("pending", None)
-        changed = _apply_ocr("pps", data, result, record)
+        changed = _apply_ocr(data, result, record)
         _record_image(data, record)
         state[state_key] = {"sha256": sha256(img), "read_at": now_kst_iso(), "verified": result["verified"]}
         flag = "교차검증 일치" if result["verified"] else f"확인 필요: {', '.join(result['disputed'])}"
@@ -147,7 +148,7 @@ def run_inbox(rid: str, name: str, state: dict, hint: str = "") -> None:
             continue
         record = {"path": rel, "title": path.name, "posted": today_kst().isoformat(),
                   "week_start": "", "week_end": "", "source_url": ""}
-        changed = _apply_ocr(rid, data, result, record)
+        changed = _apply_ocr(data, result, record)
         _record_image(data, record)
         state[state_key] = {"file": path.name, "read_at": now_kst_iso(), "verified": result["verified"]}
         print(f"[{name}] '{path.name}' 판독 완료, {changed}일 변경")
@@ -169,7 +170,14 @@ def build_index(restaurants: list[dict]) -> None:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--build-only", action="store_true", help="외부 호출 없이 저장된 식단으로 menus.json 생성")
+    args = parser.parse_args()
+    status.clear()
     restaurants = load_json(ROOT / "scripts" / "restaurants.json", [])
+    if args.build_only:
+        build_index(restaurants)
+        return 0
     hints = {r["id"]: r.get("ocr_hint", "") for r in restaurants}
     state = load_json(STATE_FILE, {})
     jobs = {

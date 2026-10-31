@@ -16,7 +16,7 @@ MEAL_ORDER = ("조식", "중식", "간편식", "석식")
 
 def _meal(label: str, text: str) -> dict:
     text = text.strip()
-    if not text or is_closed(text):
+    if is_closed(text):
         return {"label": label, "items": [], "closed": True}
     return {"label": label, "items": split_menu(text), "closed": False}
 
