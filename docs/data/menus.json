@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30T16:45:24+09:00",
+  "updated": "2026-10-31T09:48:23+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -326,7 +326,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-10-30T16:45:20+09:00",
+      "data_updated": "2026-10-31T09:48:22+09:00",
       "problem": ""
     },
     {
@@ -368,7 +368,7 @@
         }
       ],
       "data_updated": "2026-10-30T16:45:24+09:00",
-      "problem": "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다."
+      "problem": "갱신 실패: HTTPSConnectionPool(host='masstran.g2b.go.kr', port=8081): Max retries exceeded with url: /newconst.html (Caused by NewConnectionError(\"HTTPSConnection(host='masstran.g2b.go.kr', port=8081): Failed to establish a new connection: [Errno 111] Connection refused\"))"
     },
     {
       "id": "hyosung",
