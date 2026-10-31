@@ -33,13 +33,15 @@ GitHub Pages(무료 웹페이지)로 공개 → 휴대폰에서 바로 확인
 
 ## 처음 한 번만 하는 설정
 
-### 1. API 키 등록 (이미지 판독용)
-- API 키(API key)란 프로그램이 Claude AI를 쓸 수 있게 해 주는 비밀 열쇠입니다.
-- https://console.anthropic.com 에서 키를 만든 뒤,
+### 1. API 키 등록 (이미지 판독용, 무료)
+- API 키(API key)란 프로그램이 AI를 쓸 수 있게 해 주는 비밀 열쇠입니다.
+- 기본 판독 AI는 **Google Gemini**입니다. 무료 등급으로 충분합니다(주 1~2장 판독).
+- https://aistudio.google.com 에서 `Get API key`로 키를 만든 뒤,
 - 저장소 화면 → **Settings → Secrets and variables → Actions → New repository secret**
-  - Name: `ANTHROPIC_API_KEY`
+  - Name: `GEMINI_API_KEY`
   - Secret: 복사한 키 붙여넣기
 - 키가 없어도 국립중앙도서관 식단은 정상 표시됩니다. 조달청은 원본 이미지 링크만 표시됩니다.
+- (선택) Claude로 판독하려면 `ANTHROPIC_API_KEY`를 등록하고, Variables에 `OCR_PROVIDER` = `claude`를 넣습니다.
 
 ### 2. 웹페이지 켜기
 - **Settings → Pages → Build and deployment → Source** 를 `GitHub Actions` 로 선택
@@ -63,7 +65,7 @@ GitHub Pages(무료 웹페이지)로 공개 → 휴대폰에서 바로 확인
 | `scripts/update.py` | 전체 실행 순서(수집 → 판독 → 페이지 데이터 생성) |
 | `scripts/source_nl.py` | 국립중앙도서관 식단 읽기 |
 | `scripts/source_pps.py` | 조달청 게시판에서 식단표 이미지 찾기·내려받기 |
-| `scripts/ocr.py` | AI 이미지 판독과 두 번 읽기 교차검증 |
+| `scripts/ocr.py` | AI 이미지 판독(Gemini 기본, Claude 선택)과 두 번 읽기 교차검증 |
 | `scripts/restaurants.json` | 식당 이름·위치·안내 문구 (식당 추가 시 여기 수정) |
 | `docs/index.html` | 휴대폰용 식단 페이지 |
 | `docs/data/*.json` | 식당별 식단 데이터 |
@@ -71,5 +73,7 @@ GitHub Pages(무료 웹페이지)로 공개 → 휴대폰에서 바로 확인
 | `tests/test_parsers.py` | 읽기 기능 점검용 테스트 |
 
 ## 참고
-- 판독 모델은 기본 `claude-sonnet-5-5`입니다(월 약 1,000원 수준). 바꾸려면 Settings → Variables에 `OCR_MODEL`을 추가하세요.
+- 판독 모델은 기본 `gemini-flash-latest`(항상 최신 Gemini Flash를 가리키는 이름)입니다. 바꾸려면 Settings → Variables에 `OCR_MODEL`을 추가하세요.
+- Gemini 무료 등급은 하루 호출 횟수에 한도가 있습니다. 한도에 걸리면 그 이미지는 원본만 표시하고, 다음 자동 실행 때 다시 판독합니다.
+- 무료 등급에서는 Google이 입력 내용을 모델 개선에 쓸 수 있습니다. 공개된 식단표만 넣으므로 문제는 없습니다.
 - 식당 누리집 구조가 바뀌면 Actions 실행 기록에 노란 경고가 남고, 페이지의 해당 식당 칸에도 안내가 표시됩니다.
