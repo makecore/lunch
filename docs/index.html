@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>반포 구내식당 식단</title>
+<title>반포 점심 · 구내식당 식단 모음</title>
 <meta name="description" content="국립중앙도서관·서울지방조달청·효성반포빌딩 구내식당 오늘의 식단">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -39,6 +39,10 @@
   }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 16px 48px; }
 
+  .brand { display: flex; align-items: baseline; gap: 10px; margin: 0 0 18px; padding-bottom: 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent); }
+  .brand strong { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); }
+  .brand span { font-size: 14px; color: var(--muted); }
   header h1 {
     font-weight: 800; font-size: clamp(2.1rem, 7vw, 3.4rem); line-height: 1.1; letter-spacing: -0.03em;
     margin: 0;
@@ -101,8 +105,6 @@
   .badge { font-size: 12.5px; padding: 2px 8px; border-radius: 999px; }
   .badge.ok { color: var(--ok-ink); background: color-mix(in srgb, var(--ok-ink) 12%, transparent); }
   .badge.check { color: var(--warn-ink); background: var(--warn-bg); }
-  .problem { margin-top: 12px; padding: 8px 10px; border-radius: 10px; background: var(--warn-bg);
-    color: var(--warn-ink); font-size: 13.5px; }
 
   .page-foot { margin-top: 32px; color: var(--muted); font-size: 13px; }
   .page-foot p { margin: 4px 0; }
@@ -117,8 +119,9 @@
 <body>
 <div class="wrap">
   <header>
+    <p class="brand"><strong>반포 점심</strong><span>반포대로 구내식당 식단 모음</span></p>
     <h1 id="title">오늘의 식단</h1>
-    <p id="subtitle">반포대로 구내식당 세 곳</p>
+    <p id="subtitle">국립중앙도서관 · 서울지방조달청 · 아펠가모 반포</p>
   </header>
 
   <nav class="week" aria-label="날짜 선택">
@@ -131,7 +134,6 @@
 
   <footer class="page-foot">
     <p id="updated"></p>
-    <p>이미지로 올라오는 식단은 AI가 두 번 따로 읽어 비교합니다. 결과가 엇갈린 칸은 ‘확인 필요’로 표시하니, 원본 식단표와 함께 보세요.</p>
   </footer>
 </div>
 
@@ -204,18 +206,14 @@
         ? `<p class="empty">이날은 운영하지 않습니다.</p>`
         : day.meals.filter(m => !(m.closed && m.label === "석식" && day.meals.length > 1 && r.id === "nl")).map(renderMeal).join("");
     } else if (img && img.pending) {
-      body = `<p class="empty"><strong>식단표 이미지를 받았습니다.</strong> 판독은 아직 하지 않았습니다. 아래 원본 식단표를 열어 보세요.</p>`;
-    } else if (r.method === "photo") {
-      body = `<p class="empty"><strong>이날 식단이 아직 없습니다.</strong> 식단표 사진을 저장소의 <code>inbox/${esc(r.id)}</code> 폴더에 올리면 판독해서 채웁니다.</p>`;
+      body = `<p class="empty">아래 <strong>원본 식단표</strong>에서 이날 메뉴를 확인해 주세요.</p>`;
     } else {
-      body = `<p class="empty"><strong>이날 식단이 아직 올라오지 않았습니다.</strong> 식당 누리집에 게시되면 매일 아침 자동으로 반영됩니다.</p>`;
+      body = `<p class="empty">이날 식단이 아직 올라오지 않았습니다.</p>`;
     }
 
     const foot = [];
-    if (day && day.source === "image") {
-      foot.push(day.verified
-        ? `<span class="badge ok" title="AI가 두 번 따로 읽은 결과가 일치했습니다">두 번 읽어 일치</span>`
-        : `<span class="badge check" title="두 번 읽은 결과가 달라 다시 확인한 칸이 있습니다">확인 필요</span>`);
+    if (day && day.source === "image" && !day.verified) {
+      foot.push(`<span class="badge check" title="식단표 사진에서 옮겨 적은 메뉴라 일부 글자가 다를 수 있습니다">원본과 대조해 주세요</span>`);
     }
     if (img) foot.push(`<a href="${esc(img.path)}" target="_blank" rel="noopener">원본 식단표</a>`);
     if (r.source_url) foot.push(`<a href="${esc(r.source_url)}" target="_blank" rel="noopener">식당 게시판</a>`);
@@ -224,7 +222,6 @@
       <h2 id="h-${esc(r.id)}">${esc(r.name)}</h2>
       <p class="where">${esc(r.place)}${r.info ? `, ${esc(r.info)}` : ""}</p>
       ${body}
-      ${r.problem ? `<p class="problem">${esc(r.problem)}</p>` : ""}
       <div class="foot">${foot.join("")}</div>
     </section>`;
   }
@@ -234,7 +231,7 @@
     document.getElementById("title").textContent =
       `${d.getMonth() + 1}월 ${d.getDate()}일 ${DOW[d.getDay()]}요일`;
     document.getElementById("subtitle").textContent =
-      selected === todayIso ? "오늘, 반포대로 구내식당 세 곳의 식단입니다" : "반포대로 구내식당 세 곳의 식단입니다";
+      (selected === todayIso ? "오늘 · " : "") + "국립중앙도서관 · 서울지방조달청 · 아펠가모 반포";
     renderWeek();
     document.getElementById("board").innerHTML = data.restaurants.map(renderPlace).join("");
   }
@@ -254,7 +251,7 @@
     data = json;
     const u = new Date(new Date(data.updated).toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
     document.getElementById("updated").textContent =
-      `마지막 갱신 ${u.getMonth() + 1}월 ${u.getDate()}일 ${pad(u.getHours())}:${pad(u.getMinutes())} (한국 시간, 매일 아침 자동 갱신)`;
+      `${u.getMonth() + 1}월 ${u.getDate()}일 ${pad(u.getHours())}:${pad(u.getMinutes())} 기준`;
     render();
   }
 
@@ -264,7 +261,7 @@
     .then(start)
     .catch(() => {
       document.getElementById("board").innerHTML =
-        `<p class="empty"><strong>식단 데이터를 불러오지 못했습니다.</strong> 잠시 뒤 새로고침해 주세요. 계속되면 저장소의 Actions 탭에서 최근 실행 기록을 확인하세요.</p>`;
+        `<p class="empty"><strong>식단 데이터를 불러오지 못했습니다.</strong> 잠시 뒤 새로고침해 주세요.</p>`;
     });
 })();
 </script>
