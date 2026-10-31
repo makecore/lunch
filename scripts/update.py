@@ -83,11 +83,19 @@ def run_pps(state: dict, hint: str = "") -> None:
         if not ocr.available():
             record["pending"] = True
             _record_image(data, record)
-            warn("pps", "ANTHROPIC_API_KEY가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다.")
+            warn("pps", "판독용 AI 키(GEMINI_API_KEY)가 없어 식단표 이미지를 판독하지 못했습니다. 원본 이미지만 표시합니다.")
             continue
         context = (f"서울지방조달청 구내식당. 게시글 제목 '{post['title']}', 게시일 {post['posted']}. "
                    f"식단 기간은 {post['week_start']} ~ {post['week_end']}로 추정된다. " + hint)
-        result = ocr.transcribe(img, ctype, context)
+        try:
+            result = ocr.transcribe(img, ctype, context)
+        except Exception as exc:  # 판독 실패(호출 한도 초과 등) → 원본만 보여 주고 다음 실행 때 다시 시도
+            traceback.print_exc()
+            record["pending"] = True
+            _record_image(data, record)
+            warn("pps", f"식단표 판독에 실패해 원본 이미지만 표시합니다. 다음 자동 실행 때 다시 시도합니다. ({exc})")
+            continue
+        record.pop("pending", None)
         changed = _apply_ocr("pps", data, result, record)
         _record_image(data, record)
         state[state_key] = {"sha256": sha256(img), "read_at": now_kst_iso(), "verified": result["verified"]}
@@ -121,7 +129,7 @@ def run_inbox(rid: str, name: str, state: dict, hint: str = "") -> None:
         if state_key in state:
             continue
         if not ocr.available():
-            warn(rid, f"ANTHROPIC_API_KEY가 없어 '{path.name}' 사진을 판독하지 못했습니다.")
+            warn(rid, f"판독용 AI 키(GEMINI_API_KEY)가 없어 '{path.name}' 사진을 판독하지 못했습니다.")
             continue
         img, ctype = _to_jpeg_if_heic(raw, IMAGE_EXT[path.suffix.lower()])
         ext = "jpg" if ctype == "image/jpeg" else ctype.split("/")[1]
@@ -131,7 +139,12 @@ def run_inbox(rid: str, name: str, state: dict, hint: str = "") -> None:
         context = (f"{name}. 오늘은 {today_kst().isoformat()} ({'월화수목금토일'[today_kst().weekday()]}요일)이다. "
                    "사람이 직접 찍어 올린 식단표 사진이므로 기울어짐·빛 반사가 있을 수 있다. "
                    "날짜에 연도가 없으면 오늘과 가장 가까운 날짜로 연도를 정한다. " + hint)
-        result = ocr.transcribe(img, ctype, context)
+        try:
+            result = ocr.transcribe(img, ctype, context)
+        except Exception as exc:  # 판독 실패 → 기록하지 않으므로 다음 실행 때 다시 시도
+            traceback.print_exc()
+            warn(rid, f"'{path.name}' 사진 판독에 실패했습니다. 다음 자동 실행 때 다시 시도합니다. ({exc})")
+            continue
         record = {"path": rel, "title": path.name, "posted": today_kst().isoformat(),
                   "week_start": "", "week_end": "", "source_url": ""}
         changed = _apply_ocr(rid, data, result, record)

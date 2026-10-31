@@ -43,10 +43,13 @@ jobs:
 
       - name: 식단 수집·판독
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OCR_PROVIDER: ${{ vars.OCR_PROVIDER }}
           OCR_MODEL: ${{ vars.OCR_MODEL }}
         run: |
           if [ -z "$OCR_MODEL" ]; then unset OCR_MODEL; fi
+          if [ -z "$OCR_PROVIDER" ]; then unset OCR_PROVIDER; fi
           python scripts/update.py
 
       - name: 바뀐 내용 저장(커밋)
