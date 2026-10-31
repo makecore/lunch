@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>반포 구내식당 식단</title>
 <meta name="description" content="국립중앙도서관·서울지방조달청·효성반포빌딩 구내식당 오늘의 식단">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <style>
   :root {
     --tray: #E7EBEE;        /* 스테인리스 식판 */
@@ -36,13 +35,13 @@
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; background: var(--tray); color: var(--ink);
-    font: 400 16px/1.55 "IBM Plex Sans KR", system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+    font: 400 16px/1.55 "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 16px 48px; }
 
   header h1 {
-    font: 400 clamp(2.1rem, 7vw, 3.4rem)/1.05 "Black Han Sans", sans-serif;
-    margin: 0; letter-spacing: -0.01em;
+    font-weight: 800; font-size: clamp(2.1rem, 7vw, 3.4rem); line-height: 1.1; letter-spacing: -0.03em;
+    margin: 0;
   }
   header p { margin: 6px 0 0; color: var(--muted); }
 
@@ -64,7 +63,7 @@
     border-top: 1px dashed var(--well-edge);
   }
   .ticket .dow { display: block; font-size: 13px; color: var(--muted); padding-bottom: 7px; }
-  .ticket .num { display: block; font: 400 20px/1 "Black Han Sans", sans-serif; padding-top: 6px; }
+  .ticket .num { display: block; font-weight: 700; font-size: 20px; line-height: 1; font-variant-numeric: tabular-nums; padding-top: 6px; }
   .ticket.weekend .dow { color: var(--faint); }
   .ticket.today .dow { color: var(--kimchi); font-weight: 600; }
   .ticket[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--tray); }
@@ -89,7 +88,7 @@
   .meal + .meal { padding-top: 14px; border-top: 1px dashed var(--well-edge); }
   .meal h3 { margin: 0 0 6px; font-size: 14px; font-weight: 600; color: var(--c); }
   .mains { list-style: none; margin: 0; padding: 0; }
-  .mains li { font: 400 21px/1.35 "Black Han Sans", sans-serif; letter-spacing: -0.005em; }
+  .mains li { font-weight: 700; font-size: 21px; line-height: 1.35; letter-spacing: -0.02em; }
   .sides { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
   .closed { margin: 0; color: var(--faint); font-size: 15px; }
 
