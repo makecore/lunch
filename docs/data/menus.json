@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31T13:01:52+09:00",
+  "updated": "2026-10-31T13:07:54+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -327,13 +327,13 @@
       },
       "images": [],
       "data_updated": "2026-10-31T13:01:46+09:00",
-      "problem": ""
+      "problem": "갱신 실패: HTTPSConnectionPool(host='www.nl.go.kr', port=443): Max retries exceeded with url: /NL/contents/N40501020000.do (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.nl.go.kr', port=443) at 0x7f1836b2cb90>, 'Connection to www.nl.go.kr timed out. (connect timeout=30)'))"
     },
     {
       "id": "pps",
       "name": "서울지방조달청 구내식당",
       "place": "반포대로 217",
-      "info": "매주 식단표 이미지로 게시",
+      "info": "",
       "source_name": "서울지방조달청 구내식당 게시판",
       "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
       "method": "image",
@@ -368,7 +368,7 @@
         }
       ],
       "data_updated": "2026-10-30T16:45:24+09:00",
-      "problem": "갱신 실패: 조달청 게시판에서 식단표 글을 찾지 못했습니다 (페이지 구조 변경 가능성)."
+      "problem": "갱신 실패: HTTPSConnectionPool(host='masstran.g2b.go.kr', port=8081): Max retries exceeded with url: /newconst.html (Caused by NewConnectionError(\"HTTPSConnection(host='masstran.g2b.go.kr', port=8081): Failed to establish a new connection: [Errno 111] Connection refused\"))"
     },
     {
       "id": "hyosung",
