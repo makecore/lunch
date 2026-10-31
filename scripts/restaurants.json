@@ -12,7 +12,7 @@
     "id": "pps",
     "name": "서울지방조달청 구내식당",
     "place": "반포대로 217",
-    "info": "매주 식단표 이미지로 게시",
+    "info": "",
     "source_name": "서울지방조달청 구내식당 게시판",
     "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
     "method": "image",
