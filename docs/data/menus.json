@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-31T14:02:19+09:00",
+  "updated": "2026-10-31T16:32:37+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -326,7 +326,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-10-31T14:02:18+09:00",
+      "data_updated": "2026-10-31T16:32:33+09:00",
       "problem": ""
     },
     {
@@ -368,7 +368,7 @@
         }
       ],
       "data_updated": "2026-10-30T16:45:24+09:00",
-      "problem": "갱신 실패: HTTPSConnectionPool(host='masstran.g2b.go.kr', port=8081): Max retries exceeded with url: /newconst.html (Caused by NewConnectionError(\"HTTPSConnection(host='masstran.g2b.go.kr', port=8081): Failed to establish a new connection: [Errno 111] Connection refused\"))"
+      "problem": "갱신 실패: 조달청 게시판에서 식단표 글을 찾지 못했습니다 (페이지 구조 변경 가능성)."
     },
     {
       "id": "hyosung",
