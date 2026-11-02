@@ -66,18 +66,17 @@ button:focus-visible,a:focus-visible {
   align-items:center;
   gap:10px;
 }
-.brand-mark {
-  display:inline-grid;
-  place-items:center;
-  width:30px;
-  height:30px;
-  border:1.5px solid var(--green);
-  border-radius:50%;
-  font-size:19px;
+.brand-name {
+  font-family:"Jua",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
+  font-size:30px;
+  font-weight:400;
+  letter-spacing:0;
+  line-height:1;
+  color:var(--green);
 }
 .brand-dot {
   color:#a5b955;
-  margin-left:-8px;
+  margin-left:-9px;
 }
 .brand>span {
   font-size:13px;
@@ -284,6 +283,39 @@ h1 {
   letter-spacing:-.035em;
   overflow-wrap:anywhere;
 }
+.more {
+  margin-top:22px;
+  border-top:1px solid var(--line);
+  padding-top:14px;
+}
+.more summary {
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  color:var(--muted);
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.more summary::-webkit-details-marker {
+  display:none;
+}
+.more summary::before {
+  content:'＋';
+  font-size:12px;
+}
+.more[open] summary::before {
+  content:'－';
+}
+.more summary:hover {
+  color:var(--ink);
+}
+.more .meal:first-of-type {
+  margin-top:16px;
+  padding-top:0;
+  border-top:0;
+}
 .sides {
   font-size:13px;
   color:var(--muted);
@@ -395,9 +427,15 @@ h1 {
   }
   .brand>span {
     font-size:11px;
+    text-align:right;
+    max-width:150px;
+    line-height:1.4;
   }
   .brand a {
     font-size:21px;
+  }
+  .brand-name {
+    font-size:26px;
   }
   .num {
     font-size:20px;

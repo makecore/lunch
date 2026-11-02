@@ -1,7 +1,13 @@
 (() => {
   const DOW = ["일", "월", "화", "수", "목", "금", "토"];
   // 밥·김치·샐러드처럼 매일 나오는 기본 반찬은 작게 보여 준다.
-  const STAPLE = /^(쌀밥|흰밥|백미밥|잡곡밥|현미밥|흑미밥|보리밥|기장밥|귀리밥|.*김치|깍두기|섞박지|총각김치|그린샐러드|양상추샐러드|.*샐러드바|단무지|숭늉|누룽지|요구르트|요플레|야쿠르트|.*음료|.*주스|우유)$/;
+  const RICE = "(쌀밥|흰밥|백미밥|잡곡밥|현미밥|흑미밥|보리밥|기장밥|귀리밥|추가밥)";
+  const STAPLE = new RegExp(`^(${RICE}(/${RICE})*|.*김치|깍두기|섞박지|석박지|총각김치|그린샐러드|양상추샐러드|.*샐러드바|단무지|숭늉|누룽지|요구르트|요플레|야쿠르트|.*음료|.*주스|우유)$`);
+  // 점심 위주로 보여 준다 (모든 식당·앞으로 들어올 데이터에 똑같이 적용).
+  //  - 'plus'·'플러스'가 붙은 칸(주스·샐러드 같은 곁들임)은 보이지 않는다.
+  //  - 석식·조식처럼 점심이 아닌 끼니는 접어 두고, 누르면 펼쳐 본다.
+  const HIDDEN_MEAL = /plus|플러스/i;
+  const LATER_MEAL = /석식|조식|저녁|아침/;
 
   const pad = n => String(n).padStart(2, "0");
   const iso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -63,9 +69,16 @@
     let body;
     if (day && day.meals.length) {
       const allClosed = day.meals.every(m => m.closed);
+      const shown = day.meals.filter(m => !HIDDEN_MEAL.test(m.label));
+      const lunch = shown.filter(m => !LATER_MEAL.test(m.label));
+      // 접어 둘 끼니는 메뉴가 있을 때만 (운영하지 않는 석식은 아예 표시하지 않음)
+      const later = shown.filter(m => LATER_MEAL.test(m.label) && !m.closed && m.items.length);
+      const more = later.length
+        ? `<details class="more"><summary>${esc([...new Set(later.map(m => m.label))].join(" · "))} 메뉴 보기</summary>${later.map(renderMeal).join("")}</details>`
+        : "";
       body = allClosed
         ? `<p class="empty">운영하지 않습니다.</p>`
-        : day.meals.filter(m => !(m.closed && m.label === "석식" && day.meals.length > 1 && r.id === "nl")).map(renderMeal).join("");
+        : lunch.map(renderMeal).join("") + more;
     } else if (img && img.pending) {
       // 식단표는 받았지만 글자로 옮기기 전
       body = `<p class="empty"><strong>식단표는 올라와 있습니다.</strong> 아래 <strong>원본 식단표</strong>에서 메뉴를 확인해 주세요.</p>`;
