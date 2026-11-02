@@ -120,6 +120,7 @@ def _ask_claude(image_b64: str, media_type: str, prompt: str) -> str:
 _gemini_model: str | None = None   # 실제로 호출에 성공한 모델 이름(대체 모델로 바뀌었을 수 있음)
 _last_call = 0.0
 GEMINI_GAP = float(os.environ.get("GEMINI_GAP_SECONDS", "6"))  # 무료 등급 분당 호출 제한을 피하는 간격
+GEMINI_TIMEOUT = float(os.environ.get("GEMINI_TIMEOUT_SECONDS", "240"))  # 한 번 호출에 기다리는 최대 시간
 
 
 def _gemini_error(resp) -> str:
@@ -182,8 +183,16 @@ def _ask_gemini(image_b64: str, media_type: str, prompt: str) -> str:
         if wait > 0:
             time.sleep(wait)
         _last_call = time.monotonic()
-        resp = session.post(f"{GEMINI_URL}/models/{model}:generateContent",
-                            headers={"x-goog-api-key": key}, json=body, timeout=180)
+        try:
+            resp = session.post(f"{GEMINI_URL}/models/{model}:generateContent",
+                                headers={"x-goog-api-key": key}, json=body, timeout=GEMINI_TIMEOUT)
+        except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as exc:
+            # 응답이 늦거나 연결이 끊기면 잠시 뒤 다시 시도한다
+            if attempt < 4:
+                print(f"Gemini 응답 지연·연결 끊김 — 15초 뒤 다시 시도합니다. ({type(exc).__name__})")
+                time.sleep(15)
+                continue
+            raise RuntimeError(f"Gemini 응답이 계속 늦어 판독하지 못했습니다 ({model}).") from exc
         if resp.status_code == 200:
             _gemini_model = model
             data = resp.json()
@@ -231,7 +240,8 @@ def _normalize(result: dict) -> dict:
             raise ValueError(f"잘못된 식단 날짜: {date}")
         dt.date.fromisoformat(date)
         if not isinstance(meals, list) or not meals:
-            raise ValueError(f"{date}: 끼니 정보가 없습니다.")
+            # 토요일처럼 표에 칸만 있고 메뉴가 없는 날 → 그 날짜만 건너뛴다 (전체 판독은 살린다)
+            continue
         clean = []
         for m in meals:
             if not isinstance(m, dict) or not isinstance(m.get("items", []), list):
@@ -244,8 +254,10 @@ def _normalize(result: dict) -> dict:
             items = [i for i in items if i]
             clean.append({"label": str(m.get("label", "")).strip() or "식사",
                           "items": items,
-                          "closed": m.get("closed", False)})
+                          "closed": m.get("closed", False) or not items})
         days[str(date)] = clean
+    if not days:
+        raise ValueError("판독 결과에 메뉴가 있는 날짜가 하나도 없습니다.")
     return {"week": result.get("week", ""), "days": days, "notes": result.get("notes", "")}
 
 
@@ -277,7 +289,12 @@ def transcribe(data: bytes, media_type: str, context: str) -> dict:
     base_prompt = f"이 이미지는 구내식당 주간 식단표다.\n\n기준 정보: {context}\n\n{RULES}\n\n{SCHEMA_HINT}"
 
     first = _ask(b64, media_type, base_prompt)
-    second = _ask(b64, media_type, base_prompt + "\n\n표를 왼쪽 위부터 한 칸씩 차례로 확인하며 옮겨라.")
+    try:
+        second = _ask(b64, media_type, base_prompt + "\n\n표를 왼쪽 위부터 한 칸씩 차례로 확인하며 옮겨라.")
+    except Exception as exc:  # 두 번째 판독만 실패 → 첫 판독을 쓰되 '확인 필요'로 표시
+        print(f"::warning::두 번째 판독 실패, 첫 판독 결과만 반영합니다. ({exc})")
+        first.update(verified=False, disputed=sorted(f"{d} 전체" for d in first["days"]), model=_used_model())
+        return first
     disputed = diff(first, second)
     if not disputed:
         first.update(verified=True, disputed=[], model=_used_model())
@@ -291,7 +308,12 @@ def transcribe(data: bytes, media_type: str, context: str) -> dict:
         f"판독 B:\n{json.dumps(second, ensure_ascii=False)}\n\n"
         "이미지를 다시 자세히 보고, 엇갈린 칸은 이미지에 실제로 적힌 대로 바로잡아 전체 최종본을 위 형식으로 출력하라."
     )
-    final = _ask(b64, media_type, review_prompt)
+    try:
+        final = _ask(b64, media_type, review_prompt)
+    except Exception as exc:  # 재확인 실패 → 첫 판독을 쓰되 엇갈린 칸은 '확인 필요'
+        print(f"::warning::재확인 판독 실패, 첫 판독 결과를 반영합니다. ({exc})")
+        first.update(verified=False, disputed=disputed, model=_used_model())
+        return first
     disputed = sorted(set(disputed + diff(first, final) + diff(second, final)))
     final.update(verified=False, disputed=disputed, model=_used_model())
     return final

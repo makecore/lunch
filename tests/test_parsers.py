@@ -136,6 +136,70 @@ def test_gemini_call_parses_json_and_retries():
     assert out["days"]["2026-11-02"][0]["items"] == ["쌀밥/흑미밥"]
 
 
+def test_normalize_skips_empty_saturday():
+    # 실제 실패 사례(2026-11-02): AI가 토요일을 빈 칸으로 돌려줘 전체 판독이 버려졌다.
+    out = ocr._normalize({"days": {
+        "2026-11-06": [{"label": "중식", "items": ["쌀밥", "제육볶음"]}],
+        "2026-11-07": [],
+    }})
+    assert list(out["days"]) == ["2026-11-06"]
+
+
+def test_gemini_retries_after_timeout():
+    import os
+    import requests
+    answer = {"days": {"2026-11-03": [{"label": "중식", "items": ["쌀밥"]}]}}
+    replies = [requests.exceptions.ReadTimeout("late"),
+               _FakeResp(200, {"candidates": [{"content": {"parts": [{"text": json.dumps(answer)}]}}]})]
+
+    def fake_post(self, url, headers=None, json=None, timeout=None):
+        r = replies.pop(0)
+        if isinstance(r, Exception):
+            raise r
+        return r
+
+    saved = {k: os.environ.pop(k, None) for k in ("GEMINI_API_KEY", "ANTHROPIC_API_KEY", "OCR_PROVIDER", "OCR_MODEL")}
+    orig = requests.Session.post, ocr.time.sleep, ocr.GEMINI_GAP
+    os.environ["GEMINI_API_KEY"] = "k"
+    requests.Session.post, ocr.time.sleep, ocr.GEMINI_GAP = fake_post, (lambda s: None), 0
+    try:
+        out = ocr._ask("aGVsbG8=", "image/png", "판독")
+    finally:
+        requests.Session.post, ocr.time.sleep, ocr.GEMINI_GAP = orig
+        for k, v in saved.items():
+            os.environ.pop(k, None)
+            if v is not None:
+                os.environ[k] = v
+    assert out["days"]["2026-11-03"][0]["items"] == ["쌀밥"] and not replies
+
+
+def test_second_read_failure_keeps_first():
+    import os
+    first = ocr._normalize({"days": {"2026-11-03": [{"label": "중식", "items": ["쌀밥", "미역국"]}]}})
+    calls = []
+
+    def fake_ask(b64, mt, prompt):
+        calls.append(prompt)
+        if len(calls) == 1:
+            return json.loads(json.dumps(first))
+        raise RuntimeError("timeout")
+
+    saved_key = os.environ.get("GEMINI_API_KEY")
+    os.environ["GEMINI_API_KEY"] = "k"
+    orig = ocr._ask
+    ocr._ask = fake_ask
+    try:
+        out = ocr.transcribe(b"\x89PNG....", "image/png", "기준")
+    finally:
+        ocr._ask = orig
+        if saved_key is None:
+            os.environ.pop("GEMINI_API_KEY", None)
+        else:
+            os.environ["GEMINI_API_KEY"] = saved_key
+    assert out["days"]["2026-11-03"][0]["items"] == ["쌀밥", "미역국"]
+    assert out["verified"] is False and out["disputed"] == ["2026-11-03 전체"]
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):
