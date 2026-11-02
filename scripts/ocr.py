@@ -254,7 +254,7 @@ def _normalize(result: dict) -> dict:
             items = [i for i in items if i]
             clean.append({"label": str(m.get("label", "")).strip() or "식사",
                           "items": items,
-                          "closed": m.get("closed", False) or not items})
+                          "closed": m.get("closed", False)})
         days[str(date)] = clean
     if not days:
         raise ValueError("판독 결과에 메뉴가 있는 날짜가 하나도 없습니다.")
