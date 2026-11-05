@@ -16,19 +16,55 @@
 <body>
 <a class="skip" href="#board">식단 바로 보기</a>
 <div class="wrap">
-  <header>
-    <div class="brand"><a href="./" aria-label="오늘의 점심 홈"><span class="brand-name">오늘의 점심</span><span class="brand-dot">.</span></a><span>국립중앙도서관 주변 구내식당 메뉴 안내</span></div>
-    <div class="intro"><p class="eyebrow">가까운 세 곳, 오늘의 메뉴</p><h1>오늘은 어디서 먹을까요?</h1><p class="intro-copy">매일의 작은 고민, 식단을 보고 골라요.</p></div>
+  <header class="brand">
+    <div>
+      <a class="brand-home" href="./" aria-label="오늘의 점심 홈"><span class="brand-name">오늘의 점심</span><span class="brand-dot">.</span></a>
+      <p class="brand-tagline">국립중앙도서관 주변 구내식당 메뉴 안내</p>
+    </div>
+    <button class="share-open" id="share-open" type="button" aria-haspopup="dialog">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM5 5v3h3V5zM16 5v3h3V5zM5 16v3h3v-3zM14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3zM18 18h3v3h-3z" fill="currentColor"/></svg>
+      공유
+    </button>
   </header>
-  <section class="calendar" aria-label="식단 날짜">
-    <div class="calendar-heading"><div><p class="eyebrow">MENU CALENDAR</p><h2 id="title">오늘의 식단</h2></div><button id="today" type="button">오늘로</button></div>
-    <nav class="week" aria-label="날짜 선택"><button class="nav" id="prev" type="button" aria-label="지난주">‹</button><div class="days" id="days"></div><button class="nav" id="next" type="button" aria-label="다음 주">›</button></nav>
-    <p class="calendar-note">날짜 아래 작은 점은 등록된 메뉴가 있다는 뜻이에요.</p>
+
+  <section class="intro">
+    <h1>오늘은 어디서 먹을까요?</h1>
+    <p class="intro-copy">가까운 구내식당 세 곳의 점심 메뉴를 날짜별로 모았어요.</p>
   </section>
+
+  <section class="calendar" aria-label="식단 날짜">
+    <div class="calendar-heading"><h2 id="title">오늘의 식단</h2><button id="today" type="button">오늘로</button></div>
+    <nav class="week" aria-label="날짜 선택"><button class="nav" id="prev" type="button" aria-label="지난주">‹</button><div class="days" id="days"></div><button class="nav" id="next" type="button" aria-label="다음 주">›</button></nav>
+    <p class="calendar-note">날짜 아래 점은 등록된 메뉴가 있다는 뜻이에요.</p>
+  </section>
+
   <div class="section-heading"><h2>식당별 메뉴</h2><p id="subtitle">한국 시간 기준</p></div>
   <main class="board" id="board" aria-live="polite"><p class="empty">식단을 불러오는 중입니다.</p></main>
   <noscript><p>날짜별 식단을 보려면 JavaScript를 켜 주세요. <a href="data/menus.json">식단 데이터 보기</a></p></noscript>
-  <footer class="page-foot"><span>잘 먹고, 좋은 오후 보내세요.</span><p id="updated"></p><p>메뉴와 운영 정보는 바뀔 수 있어요. 방문 전 원본 식단표를 확인해 주세요.</p></footer>
+
+  <footer class="page-foot">
+    <div class="foot-share">
+      <img src="qr.svg" alt="오늘의 점심 페이지로 가는 QR 코드" width="76" height="76">
+      <p>휴대폰 카메라로 찍으면 이 페이지가 열려요.<br><button class="link-button" type="button" data-share-open>QR 코드 크게 보기</button></p>
+    </div>
+    <p class="foot-thanks">잘 먹고, 좋은 오후 보내세요.</p>
+    <p id="updated"></p>
+    <p>메뉴와 운영 정보는 바뀔 수 있어요. 방문 전 원본 식단표를 확인해 주세요.</p>
+  </footer>
 </div>
+
+<dialog class="share" id="share" aria-labelledby="share-title">
+  <form method="dialog" class="share-close-form"><button class="share-close" aria-label="닫기">×</button></form>
+  <h2 id="share-title">이 페이지 공유하기</h2>
+  <p class="share-help">휴대폰 카메라로 QR 코드를 비추면 바로 열려요.</p>
+  <img class="share-qr" src="qr.svg" alt="https://makecore.github.io/lunch/ 로 가는 QR 코드" width="220" height="220">
+  <p class="share-url" id="share-url">https://makecore.github.io/lunch/</p>
+  <div class="share-actions">
+    <button type="button" id="copy-link">링크 복사</button>
+    <button type="button" id="native-share" hidden>다른 앱으로 보내기</button>
+    <a href="qr.png" download="오늘의점심-QR.png">QR 이미지 저장</a>
+  </div>
+  <p class="share-status" id="share-status" role="status"></p>
+</dialog>
 </body>
 </html>

@@ -115,8 +115,7 @@
     const d = new Date(selected + "T00:00:00");
     document.getElementById("title").textContent =
       `${d.getMonth() + 1}월 ${d.getDate()}일 ${DOW[d.getDay()]}요일`;
-    document.getElementById("subtitle").textContent =
-      (selected === todayIso ? "오늘 · " : "") + "국립중앙도서관 · 서울지방조달청 · 아펠가모 반포";
+    document.getElementById("subtitle").textContent = selected === todayIso ? "오늘 기준" : "";
     renderWeek();
     if (!data) return;
     document.getElementById("board").innerHTML = data.restaurants.map(renderPlace).join("");
@@ -143,6 +142,35 @@
     document.getElementById("updated").textContent =
       `${u.getMonth() + 1}월 ${u.getDate()}일 ${pad(u.getHours())}:${pad(u.getMinutes())} 기준`;
     render();
+  }
+
+  // ---- 공유: QR 코드 창, 링크 복사, 휴대폰 공유 메뉴 ----
+  const SHARE_URL = "https://makecore.github.io/lunch/";
+  const shareDialog = document.getElementById("share");
+  const shareStatus = document.getElementById("share-status");
+  const openShare = () => {
+    shareStatus.textContent = "";
+    if (shareDialog.showModal) shareDialog.showModal(); else window.open("qr.png", "_blank");
+  };
+  document.getElementById("share-open").addEventListener("click", openShare);
+  document.querySelectorAll("[data-share-open]").forEach(b => b.addEventListener("click", openShare));
+  shareDialog.addEventListener("click", e => { if (e.target === shareDialog) shareDialog.close(); });
+  document.getElementById("copy-link").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(SHARE_URL);
+      shareStatus.textContent = "링크를 복사했어요. 메신저에 붙여 넣으세요.";
+    } catch {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById("share-url"));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      shareStatus.textContent = "주소를 선택해 두었어요. 길게 눌러 복사하세요.";
+    }
+  });
+  if (navigator.share) {
+    const nativeBtn = document.getElementById("native-share");
+    nativeBtn.hidden = false;
+    nativeBtn.addEventListener("click", () => {
+      navigator.share({ title: "오늘의 점심", text: "국립중앙도서관 주변 구내식당 메뉴 안내", url: SHARE_URL }).catch(() => {});
+    });
   }
 
   render();
