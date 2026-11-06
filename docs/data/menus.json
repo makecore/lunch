@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-06T10:32:52+09:00",
+  "updated": "2026-11-06T17:35:41+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -487,7 +487,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-11-06T10:32:50+09:00",
+      "data_updated": "2026-11-06T17:31:12+09:00",
       "problem": ""
     },
     {
@@ -1182,6 +1182,15 @@
       },
       "images": [
         {
+          "path": "images/pps/202611060008.png",
+          "title": "식단표(11.9. ~ 11.13.)",
+          "posted": "2026-11-06",
+          "week_start": "2026-11-09",
+          "week_end": "2026-11-13",
+          "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+          "pending": true
+        },
+        {
           "path": "images/pps/202610300013.png",
           "title": "식단표(11.2. ~ 11.6.)",
           "posted": "2026-10-30",
@@ -1230,8 +1239,8 @@
           "pending": true
         }
       ],
-      "data_updated": "2026-11-06T10:32:52+09:00",
-      "problem": ""
+      "data_updated": "2026-11-06T17:35:41+09:00",
+      "problem": "식단표 판독에 실패해 원본 이미지만 표시합니다. 다음 자동 실행 때 다시 시도합니다. (Gemini 호출 실패 (gemini-flash-latest) — 503 UNAVAILABLE: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.)"
     },
     {
       "id": "hyosung",
