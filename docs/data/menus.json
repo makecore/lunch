@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13T10:49:53+09:00",
+  "updated": "2026-11-13T17:53:08+09:00",
   "restaurants": [
     {
       "id": "nl",
@@ -648,7 +648,7 @@
         }
       },
       "images": [],
-      "data_updated": "2026-11-13T10:49:50+09:00",
+      "data_updated": "2026-11-13T17:48:07+09:00",
       "problem": ""
     },
     {
@@ -1691,6 +1691,15 @@
       },
       "images": [
         {
+          "path": "images/pps/202611130008.png",
+          "title": "식단표(11.16. ~ 11.20.)",
+          "posted": "2026-11-13",
+          "week_start": "2026-11-16",
+          "week_end": "2026-11-20",
+          "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+          "pending": true
+        },
+        {
           "path": "images/pps/202611060008.png",
           "title": "식단표(11.9. ~ 11.13.)",
           "posted": "2026-11-06",
@@ -1749,19 +1758,10 @@
           "notes": "★식단은 식재료 수급상황에 따라 변경될 수 있으니 양해 부탁드립니다^^\n★더 자세한 원산지표시는 게시용 일일메뉴표를 참고해주세요.\n★ \" 우유, 밀, 메밀, 땅콩, 호두, 잣, 대두, 돼지고기, 소고기, 복숭아, 토마토, 난류(가금류), 고등어, 게, 새우, 조개류 (굴,전복,홍합 포함), 아황산류\" 는 알레르기 유발 우려가 있으니, 알레르기 체질이신 분은 주의하시기 바랍니다.\n감사합니다♡",
           "model": "gemini-flash-latest",
           "read_at": "2026-11-02T10:12:07+09:00"
-        },
-        {
-          "path": "images/pps/202610160013.png",
-          "title": "식단표(10.19. ~ 10.23.)",
-          "posted": "2026-10-16",
-          "week_start": "2026-10-19",
-          "week_end": "2026-10-23",
-          "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
-          "pending": true
         }
       ],
-      "data_updated": "2026-11-13T10:49:53+09:00",
-      "problem": ""
+      "data_updated": "2026-11-13T17:53:08+09:00",
+      "problem": "식단표 판독에 실패해 원본 이미지만 표시합니다. 다음 자동 실행 때 다시 시도합니다. (Gemini 호출 실패 (gemini-flash-latest) — 503 UNAVAILABLE: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.)"
     },
     {
       "id": "hyosung",
