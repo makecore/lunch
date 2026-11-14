@@ -1028,6 +1028,353 @@
       "source": "image",
       "image": "images/pps/202611060008.png",
       "verified": false
+    },
+    "2026-11-16": {
+      "meals": [
+        {
+          "label": "중식 한식코너",
+          "items": [
+            "쌀밥/흑미밥",
+            "바지락살미역국",
+            "닭갈비",
+            "들기름막국수",
+            "고춧잎무말랭이",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 일품코너",
+          "items": [
+            "햄볶음밥",
+            "얼큰어묵국",
+            "생선까스*타르",
+            "샐러드파스타",
+            "비트모듬피클",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 plus",
+          "items": [
+            "오미자쥬스",
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 간편식",
+          "items": [
+            "닭가슴살샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "쌀밥",
+            "건새우시금치국",
+            "매콤돈채볶음",
+            "메추리알조림",
+            "열무겉절이",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식 plus",
+          "items": [
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-17": {
+      "meals": [
+        {
+          "label": "중식 한식코너",
+          "items": [
+            "쌀밥/흑미밥",
+            "참치김치찌개",
+            "대파돈불고기",
+            "맛살볶음",
+            "도토리묵상추무침",
+            "깍두기"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 일품코너",
+          "items": [
+            "김밥볶음밥",
+            "우동국물",
+            "국물떡볶이",
+            "순대찜*양념소금",
+            "고구마튀김",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 plus",
+          "items": [
+            "사과쥬스",
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 간편식",
+          "items": [
+            "돈까스샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "쌀밥",
+            "(뚝)얼큰동태탕",
+            "두부구이*양념장",
+            "감자조림",
+            "숙주미나리나물",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식 plus",
+          "items": [
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-18": {
+      "meals": [
+        {
+          "label": "중식 한식코너",
+          "items": [
+            "쌀밥/흑미밥",
+            "버섯육개장",
+            "떡갈비조림",
+            "들깨애호박볶음",
+            "참나물사과겉절이",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 일품코너",
+          "items": [
+            "가츠동",
+            "미역장국",
+            "매콤볶음우동",
+            "아이스망고치즈",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 plus",
+          "items": [
+            "오렌지쥬스",
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 간편식",
+          "items": [
+            "새우리코타샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "쌀밥",
+            "순두부백탕",
+            "고추장돈불고기",
+            "실곤약야채무침",
+            "얼갈이된장나물",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식 plus",
+          "items": [
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-19": {
+      "meals": [
+        {
+          "label": "중식 한식코너",
+          "items": [
+            "쌀밥/흑미밥",
+            "얼큰콩나물국",
+            "순살찜닭",
+            "야끼만두*비빔야채",
+            "간장고추지",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 일품코너",
+          "items": [
+            "후리가케밥",
+            "유부장국",
+            "토마토스파게티",
+            "어니언치킨가라아게",
+            "만다린샐러드",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 plus",
+          "items": [
+            "매실쥬스",
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 간편식",
+          "items": [
+            "훈제오리샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "쌀밥",
+            "호박고추장찌개",
+            "고등어구이",
+            "청경채두부무침",
+            "매콤우엉채볶음",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식 plus",
+          "items": [
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-20": {
+      "meals": [
+        {
+          "label": "중식 한식코너",
+          "items": [
+            "쌀밥/흑미밥",
+            "얼갈이된장국",
+            "제육볶음",
+            "느타리통들깨볶음",
+            "오이도라지무침",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 일품코너",
+          "items": [
+            "추가밥",
+            "한그릇 꼬막살짬뽕",
+            "맛쵸킹탕수육",
+            "새송이편마늘볶음",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 plus",
+          "items": [
+            "블루베리쥬스",
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        },
+        {
+          "label": "중식 간편식",
+          "items": [
+            "케이준샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "쌀밥",
+            "소고기무국",
+            "들깨백닭갈비",
+            "매콤어묵볶음",
+            "상추겉절이",
+            "배추김치"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식 plus",
+          "items": [
+            "그린샐러드*드레싱"
+          ],
+          "closed": false
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-21": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [],
+          "closed": true
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
+    },
+    "2026-11-22": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [],
+          "closed": true
+        }
+      ],
+      "source": "image",
+      "image": "images/pps/202611130008.png",
+      "verified": true
     }
   },
   "images": [
@@ -1038,7 +1385,11 @@
       "week_start": "2026-11-16",
       "week_end": "2026-11-20",
       "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
-      "pending": true
+      "verified": true,
+      "disputed": [],
+      "notes": "★식단은 식재료 수급상황에 따라 변경될 수 있으니 양해 부탁드립니다^^\n★더 자세한 원산지표시는 게시용 일일메뉴표를 참고해주세요.\n★ \" 우유, 밀, 메밀, 땅콩, 호두, 잣, 대두, 돼지고기, 소고기, 복숭아, 토마토, 난류(가금류), 고등어, 게, 새우, 조개류 (굴,전복,홍합 포함), 아황산류\" 는 알레르기 유발 우려가 있으니, 알레르기 체질이신 분은 주의하시기 바랍니다.\n감사합니다♡",
+      "model": "gemini-flash-latest",
+      "read_at": "2026-11-14T17:15:27+09:00"
     },
     {
       "path": "images/pps/202611060008.png",
@@ -1110,5 +1461,5 @@
       "pending": true
     }
   ],
-  "updated": "2026-11-13T17:53:08+09:00"
+  "updated": "2026-11-14T17:15:27+09:00"
 }
