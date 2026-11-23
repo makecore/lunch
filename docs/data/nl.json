@@ -769,8 +769,141 @@
         }
       ],
       "source": "text"
+    },
+    "2026-11-23": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 뚝)떡만두국 비엔나케찹볶음 알감자조림 봄동겉절이 깍두기 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-24": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 얼큰콩나물국 제육볶음 마늘쫑멸치조림 돌나물유자소스무침 배추김치 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-25": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "영양톳밥&양념장 청국장찌개 두부조림 김말이튀김 무생채 배추김치 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-26": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 들깨미역국 고구마닭갈비 흑임자연근샐러드 콩나물무침 배추김치 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-27": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 아욱국 돈육숙주볶음 브로컬리맛살볶음 다시마초회 배추김치 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-28": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 뚝)순살감자탕 미니돈까스&칠리S 그린빈햄볶음 양념고추지 깍두기 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
+    },
+    "2026-11-29": {
+      "meals": [
+        {
+          "label": "중식",
+          "items": [
+            "쌀밥 순두부백탕 산적야채볶음 도토리묵김치무침 마카로니샐러드 깍두기 그린샐러드"
+          ],
+          "closed": false
+        },
+        {
+          "label": "석식",
+          "items": [
+            "운영없음."
+          ],
+          "closed": false
+        }
+      ],
+      "source": "text"
     }
   },
   "images": [],
-  "updated": "2026-11-22T17:53:41+09:00"
+  "updated": "2026-11-23T10:42:34+09:00"
 }
