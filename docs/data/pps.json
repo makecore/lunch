@@ -1703,6 +1703,15 @@
   },
   "images": [
     {
+      "path": "images/pps/202611270018.png",
+      "title": "식단표(11.30. ~ 12.4.)",
+      "posted": "2026-11-27",
+      "week_start": "2026-11-30",
+      "week_end": "2026-12-04",
+      "source_url": "https://www.pps.go.kr/seoul/bbs/list.do?key=01319",
+      "pending": true
+    },
+    {
       "path": "images/pps/202611200011.png",
       "title": "식단표(11.23. ~ 11.27.)",
       "posted": "2026-11-20",
@@ -1798,5 +1807,5 @@
       "pending": true
     }
   ],
-  "updated": "2026-11-27T12:38:39+09:00"
+  "updated": "2026-11-27T19:13:51+09:00"
 }
