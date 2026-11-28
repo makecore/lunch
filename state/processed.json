@@ -23,5 +23,10 @@
     "sha256": "01e9c66322ceab64ff4d3fcbd2af717877f08239728ee03651e436d5863f3a1c",
     "read_at": "2026-11-21T11:19:01+09:00",
     "verified": true
+  },
+  "pps:202611270018:1": {
+    "sha256": "446c4826f3b85c038f865b4b3f8a80b763ae2b89baa926bd65fad818643bc5be",
+    "read_at": "2026-11-28T12:24:27+09:00",
+    "verified": false
   }
 }
